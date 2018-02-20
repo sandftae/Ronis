@@ -1,0 +1,53 @@
+<head>
+    <link rel="stylesheet" href="/css/style_flex.css" type="text/css">
+    <link rel="stylesheet" href="/css/flexslider.css" type="text/css">
+
+</head>
+<style>
+    #container{
+        margin-top: 45px;
+    }
+
+    .flexslider{
+        width: 100%;
+        background-size: contain;
+    }
+    .img{
+        height: 225px;
+        background-size: contain;
+    }
+    #logo-img{
+        width: 27px;
+        height: 23px;
+        display: inline;
+        margin: 0 2px 11px 0;
+
+    }
+    #container > h2{
+        display: inline;
+        font-size: 26px;
+        padding: 0 0 1px 0;
+    }
+</style>
+
+<?php if(Session::get('login')){?>
+
+<div id="container">
+    <img id="logo-img"  src="/images/logo/logo_5.png"> <h2>Ronis</h2>
+    <div class="flexslider">
+        <ul class="slides">
+
+            <?php foreach($data as $key => $value){ ?>
+            <li data-thumb="<?=$data[$key]['file_src'];?>">
+                <img class="img" src="<?=$data[$key]['file_src'];?>">
+                <p class="flex-caption">
+                    <span>name: <?=$data[$key]['name'];?></span></br>
+                    <span><a href="<?=$data[$key]['url'];?>">url</a></span></br>
+                    <span>status: <?=$data[$key]['status'];?></span></br>
+                </p>
+            </li>
+            <?php } ?>
+        </ul>
+    </div>
+</div>
+<?php } ?>

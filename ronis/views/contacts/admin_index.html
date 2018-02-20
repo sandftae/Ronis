@@ -1,0 +1,16 @@
+<h3>Messages</h3>
+<table class="table table-striped" style="width: 100%">
+    <tr>
+        <td style="width: 5%;"></td>
+        <td style="width: 10%;">Name: </td>
+        <td style="width: 25%;">Email: </td>
+        <td style="width: 50%;">Message: </td>
+    </tr>
+    <?php foreach($data as $key){ ?>
+        <td><?=$key['id']; ?></td>
+        <td><?=$key['name']; ?></td>
+        <td><?=$key['email']; ?></td>
+        <td><?=$key['messages']; ?></td>
+    <tr>
+    <?php } ?>
+</table>

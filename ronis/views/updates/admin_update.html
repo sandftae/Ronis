@@ -1,0 +1,42 @@
+<style>
+    .form_update{
+        width: 400px;
+        margin: 0 auto;
+        padding: 5px 0 5px 0;
+    }
+    h3{
+        width: 400px;
+        margin: 0 auto;
+        padding-bottom: 20px;
+    }
+
+</style>
+
+
+<div style="height: 80px;"></div>
+<h3>Update|Create banners</h3>
+<form class="form_update" method="POST" action="" enctype="multipart/form-data" >
+    <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name" value="<?=$data['banner_info'][0]['name']; ?>" class="form-control"><br/>
+    </div>
+    <div class="form-group">
+        <label for="file">File</label>
+        <input type="file" id="file" name="file" value="<?=$data['banner_info'][0]['file_src']; ?>" class="form-control"><br/>
+    </div>
+    <div class="form-group">
+        <label for="url">URL</label>
+        <input type="text" name="url" id="url" value="<?=$data['banner_info'][0]['url']; ?>" class="form-control"><br/>
+        <!--<input name="url" id="url" class="form-control"></input>-->
+    </div>
+    <div class="form-group">
+        <label for="status">Status</label>
+        <input type="text" id="status" name="status" value="<?=$data['banner_info'][0]['status']; ?>" class="form-control"><br/>
+    </div>
+    <div class="form-group">
+        <label for="Position">Position in list</label>
+        <input type="number" id="Position" name="position" value="<?=$data['banner_info'][1]['number_position']; ?>" class="form-control"><br/>
+    </div>
+    <input type="submit" value="  Go   " class="btn btn-success">
+
+</form>

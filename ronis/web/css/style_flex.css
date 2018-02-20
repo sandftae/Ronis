@@ -1,0 +1,41 @@
+#container {
+	width:400px;
+	margin:0px auto;
+	padding: 20px;
+}
+
+
+body{
+	background-color:gray
+}
+h2 {
+	color:white;
+}
+.flex-caption {
+	background-color:black;
+    bottom: 0;
+    color: #FFFFFF;
+    font-size: 14px;
+    left: 0;
+    line-height: 18px;
+    padding: 2%;
+    text-align: center;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.3);
+    width: 100%;
+	opacity:0.6;
+	margin:-65px 0 0 0;
+	}
+.flex-control-thumbs img{
+	width:100px !important;
+}
+
+#carousel img {
+	opacity:0.5;
+}
+
+#carousel img:hover{
+	opacity:1;
+}
+.flex-active-slide img{
+	opacity:1 !important;
+}

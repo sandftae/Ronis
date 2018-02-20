@@ -1,0 +1,51 @@
+
+<style>
+    table {
+        width:600px;
+        margin: auto;
+    }
+
+    .table-striped button{
+        padding-left: 10px;
+        margin: 5px 10px 5px 0 ;
+    }
+
+    .page{
+        width: 400px;
+        margin: 0 auto;
+        padding: 5px;
+    }
+
+    .btn-success{
+        width: 400px;
+        height: 50px;
+        margin: 5px auto;
+        padding:5px auto;
+
+    }
+</style>
+<div style="margin-top: 75px;">
+    <h3>All banners: </h3>
+<table class="rable table-striped" style="width: 400px">
+  <div class="page">
+      <a href="/admin/updates/add/"><button class="btn btn-sm btn-success">New banner</button></a>
+  </div>
+</table><table class="rable table-striped">
+   <?php foreach($data['pages'] as $value){ ?>
+    <tr>
+        <td class="name">
+            <?=$value['name']?>
+        </td>
+        <td align="right">
+            <a href="/admin/updates/update/<?=$value['id']; ?>"><button class="btn btn-sm btn-primary">update</button></a>
+            <a href="/admin/updates/delete/<?=$value['id']; ?>"><button  class=" warning btn btn-sm btn-warning">delete</button></a>
+            <a href="/admin/updates/up/<?=$value['id']; ?>"><button  class=" warning btn btn-sm btn-primary">up</button></a>
+            <a href="/admin/updates/down/<?=$value['id']; ?>"><button  class=" warning btn btn-sm btn-primary">down</button></a>
+            <!--<a href="/admin/updates/down/<?=$value['id']; ?>"><button  class=" warning btn btn-sm btn-primary">show image</button></a>-->
+        </td>
+    </tr>
+    <?php } ?>
+</table>
+
+</div>
+

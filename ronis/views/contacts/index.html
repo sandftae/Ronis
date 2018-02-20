@@ -1,0 +1,13 @@
+<h3 style="margin: 0 0 20px 42px;">Contact us:</h3>
+<form id="contact_form" action="" method="post" style="padding: 0  auto; margin: 0 auto;">
+
+    <span style="color: red;" ><?php if(!empty($data['name'])){ echo $data['name']; } ?></span>
+    <input type="text" class="form-control" name="name" placeholder="Your Name" value="<?php if(isset($_POST['name'])){echo $_POST['name'];} ?>" /><br/>
+
+    <span style="color: red;"><?php if(!empty($data['email'])){ echo $data['email']; } ?></span>
+    <input type="text" class="form-control" name="email" placeholder="Your Email" value="<?php if(isset($_POST['email'])){echo $_POST['email'];} ?>" /><br/>
+
+    <span style="color: red;"><?php if(!empty($data['message'])){ echo $data['message']; } ?></span>
+    <textarea name="message" class="form-control" placeholder="Your Message"  value="<?php if(isset($_POST['message'])){echo $_POST['message'];} ?>"></textarea><br/>
+    <button class="btn btn-lg btn-primary btn-block" name="send" type="submit">Send</button>
+</form>

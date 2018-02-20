@@ -1,0 +1,48 @@
+<style>
+    .form_update{
+        width: 400px;
+        margin: 0 auto;
+        padding: 5px 0 5px 0;
+    }
+    h3{
+        width: 400px;
+        margin: 0 auto;
+        padding-bottom: 20px;
+    }
+    .errors{
+        color: crimson;
+    }
+</style>
+<div style="width: 150px; height: 150px;"></div>
+<div style="height: 80px;"></div>
+<h3>New banners</h3>
+<form class="form_update" method="POST" action="" enctype="multipart/form-data" >
+    <div class="form-group">
+
+        <label for="name">Name: </label><span class="errors"> <?php if($data['error']['error_fields']['name_error'] != null){
+                    echo $data['error']['error_fields']['name_error']; }?></span>
+        <input type="text" id="name" name="name" placeholder="enter the name of the banner" value="<?=$_POST['name'];?>" class="form-control"><br/>
+    </div>
+    <div class="form-group">
+        <label for="file">File: </label><span class="errors"> <?php if($data['error'][0] != null){
+                    echo $data['error'][0]; } ?></span>
+        <input type="file" id="file" name="file" placeholder="choose File" class="form-control"><br/>
+    </div>
+    <div class="form-group">
+        <label for="url">URL: </label><span class="errors"> <?php if($data['error']['error_fields']['url_error'] != null){
+                    echo $data['error']['error_fields']['url_error']; }?></span>
+        <input type="text" name="url" id="url" placeholder="here url" value="<?=$_POST['url'];?>" class="form-control"><br/>
+    </div>
+    <div class="form-group">
+       <label for="status">Status: </label><span class="errors"> <?php if($data['error']['error_fields']['status_error'] != null){
+                    echo $data['error']['error_fields']['status_error']; } ?></span>
+        <input type="text" id="status" name="status" placeholder="status describe" value="<?=$_POST['status'];?>" class="form-control"><br/>
+    </div>
+    <div class="form-group">
+        <label for="Position">Position in list: </label><span class="errors"> <?php if($data['error']['error_fields']['position_error'] != null){
+                    echo $data['error']['error_fields']['position_error']; } ?></span>
+        <input type="number" id="Position" name="position" min="0" value="<?=$_POST['position'];?>" placeholder="position is positive number" class="form-control"><br/>
+    </div>
+    <input type="submit" value="  Go " class="btn btn-success">
+
+</form>

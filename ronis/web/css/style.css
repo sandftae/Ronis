@@ -1,0 +1,27 @@
+body{
+    padding-top: 50px;
+}
+
+.starter-template{
+    padding: 40px 15px;
+}
+
+form{
+    width: 400px;
+    max-width: 400px;
+    padding: 0  auto;
+    margin: 0 auto;
+}
+
+#contact-us{
+    padding: 0  auto;
+    margin: 0 auto;
+}
+
+.alert{
+    width: 400px;
+    max-width: 400px;
+    padding: 0  auto;
+    margin: 0 auto;
+}
+

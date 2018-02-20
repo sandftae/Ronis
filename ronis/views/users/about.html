@@ -1,0 +1,58 @@
+<style>
+
+    .container-about{
+        background-color: white;
+        width: 650px;
+        height: auto;
+        /*overflow: hidden;*/
+        margin: 60px auto;
+        border: 1px solid darkgrey;
+        border-radius: 15px/7px;
+        position: absolute;
+        top: -2px;
+        padding: 20px 15px 20px 15px;
+        font-family: Calibri  Arial, Helvetica, sans-serif;
+        font-size: 15px;
+        left: 22%;
+        /*font-style: italic;*/
+    }
+</style>
+<div>
+    <div class="container-about">
+        <div  id="starter" class="starter-template">
+            <h3>About this a task</h3>
+            <p><?=$data['about']['task'];?></p>
+        </div>
+    </div>
+
+</div>
+
+
+
+<script>
+
+
+    //Вынужденный костыль
+    var deltag = document.getElementsByClassName('default-div');
+    var deldiv = document.getElementsByClassName('del-div');
+
+    deltag[0].removeChild(deldiv[0]);
+
+    var div = document.createElement('div');
+    div.classList.add('container-about');
+    document.body.appendChild(div);
+
+    var divForInner = document.getElementsByClassName('container-about');
+
+    var h = document.createElement('h3');
+    h.innerHTML = 'About this a task: ';
+    divForInner[0].appendChild(h);
+
+    var p = document.createElement('p');
+    p.innerHTML = "<?=$data['about']['task'];?>";
+    divForInner[0].insertBefore(p , divForInner[0].children[1]);
+
+
+
+</script>
+

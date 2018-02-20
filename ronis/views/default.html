@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <title><?=Config::get('site_name') ?></title>
+    <link rel="stylesheet" href="../web/css/style.css">
+    <link rel="shortcut icon" href="/img/logo/2369529.png" type="image/x-icon">
+
+    <!--Подсоединяю стили для FlexSlider-->
+    <link rel="stylesheet" href="css/style_flex.css" type="text/css">
+    <link rel="stylesheet" href="css/flexslider.css" type="text/css">
+
+    <!--Подсоединяю стили для bootstrap-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+
+    <!--Подсоединяю js для bootstrap-->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
+    <!--Подсоединяю JS и JQ для Flexslider-->
+    <script src="/js/FlexSlider/jquery-1.11.0.min.js"></script>
+    <script src="/js/FlexSlider/jquery.easing.1.3.js"></script>
+    <script src="/js/FlexSlider/jquery.flexslider.js"></script>
+    <script src="/js/FlexSlider/script_flex_slider.js"></script>
+
+
+
+
+</head>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/"><?=Config::get('site_name')?></a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+            <?php if(Session::get('login')){?>
+            <ul class="nav navbar-nav">
+                <li <?php if( App::getRouter()->getController() == 'pages' ) {?>class="active"<?php } ?>><a href="/admin/pages/">Update | Create articles</a></li>
+                <li <?php if( App::getRouter()->getController() == 'updates' ) {?>class="active"<?php } ?>><a href="/admin/updates/">Update | Create banner</a></li>
+                <li <?php if( App::getRouter()->getController() == 'images' ) {?>class="active"<?php } ?>><a href="/images/show/">Show slider</a></li>
+                <li <?php if( App::getRouter()->getController() == 'contacts' ) {?>class="active"<?php } ?>><a href="/admin/contacts/">Contact Us</a></li>
+                <li><a <?php if( App::getRouter()->getController() == 'users' ) {?>class="active"<?php } ?> href="/../users/about/">About this task</a></li>
+                <li><a href="/admin/users/logout">Logout</a></li>
+            </ul>
+            <?php }else{  ?>
+            <ul class="nav navbar-nav">
+                <li><a <?php if( App::getRouter()->getController() == 'users' ) {?>class="active"<?php } ?> href="/users/enter/">Enter</a></li>
+                <li><a <?php if( App::getRouter()->getController() == 'users' ) {?>class="active"<?php } ?> href="../users/about/">About this task</a></li>
+                <li><a <?php if( App::getRouter()->getController() == 'contacts' ) {?>class="active"<?php } ?> href="/contacts/">Write to us</a></li>
+            </ul>
+            <?php } ?>
+        </div>
+    </div>
+</nav>
+<div class="default-div">
+    <div class="del-div"  style="margin: 60px auto; width: 500px; border: 1px solid gray; padding: 7px; border-radius: 13px/12px;">
+    <!--Вывод контента (сгенерированных страниц) здесь-->
+        <?=$data['content']?>
+    </div>
+</div>
+<div class="container">
+    <div class="starter-template">
+        <?php if(Session::hasFlash()){ ?>
+            <div class="alert alert-info" role="alert">
+                <?php Session::flash(); ?>
+            </div>
+        <?php } ?>
+
+    </div>
+</div>
+</body>
+</html>
