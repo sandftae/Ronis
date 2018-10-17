@@ -106,7 +106,6 @@ Class Database{
     /*
      * Метод вносит значение позиции в таблицу position
      */
-
     public function insertPosition($position_number){
         $sql = 'INSERT INTO ' . TABLE_POSITION . ' VALUES(null , ?)';
         $conn = $this -> connection -> prepare($sql);
@@ -118,7 +117,6 @@ Class Database{
      * Метод проводит обновление позиции по заданному id
      *
      */
-
     public function updatePositionById($id_banner , $new_position_number){
         $sql = 'UPDATE ' . TABLE_POSITION . ' SET number_position="'.$new_position_number.'" WHERE id_banner="'.$id_banner.'"';
         $conn = $this -> connection -> prepare($sql);
@@ -142,105 +140,4 @@ Class Database{
         // Массив для проведения отладки. Собержит инфо по всем внесенным данным (TRUE/FALSE)
         return $result;
     }
-
-//------------------------
-
-
-
-
-
-
-//==============================
-/*
- * Ниже описываются методы БД, которые нужны будут, когда на
- * сайте разрешено будет регистрироваться пользваотелям самостоятельно.
- * Здесь есть проверка ена существование поьзователя с таким логином
- * или почтой и проверка совпадений логина и имейла для входа.
- * Написал, т.к. пларнировал зделать больше, чем нужно было по ТЗ
- */
-//==============================
-
-
-
-//------------------------
-
-//
-//    /*
-//     * Метод, который позволяет получить тот или иной ответ на запрос
-//     */
-//
-//    public function query($sql)
-//    {
-//        $query = $this -> connection -> query($sql);
-//        $result = $query -> fetchAll(PDO::FETCH_ASSOC);
-//        return $result;
-//    }
-//    /*
-//     * Метод, который позволяет создавать пользователя
-//     */
-//    public function create_user(array $data)
-//    {
-//        $sql = "INSERT INTO user VALUES(null , ? , ? , ?);";
-//        $conn = $this -> connection -> prepare($sql);
-//        $result = $conn -> execute( [$data['login'] , $data['email'] , $data['password']] );
-//        return $result;
-//    }
-//
-//    /*
-//     * Метод для проверки существования логина. Использвуется при валидации
-//     */
-//    public function cheсk_login($login)
-//    {
-//        $sql = "SELECT * FROM  " . TABLE_NAME . "  WHERE login='{$login}'";
-//        $sth = $this ->connection -> query($sql);
-//        $result = $sth -> fetchAll(PDO::FETCH_ASSOC);
-//        return $result;
-//    }
-//
-//
-//    /*
-//     * Метод для проверки существования email. Использвуется при валидации
-//     */
-//    public function cheсk_email($email)
-//    {
-//        $sql = "SELECT * FROM  " . TABLE_NAME . "  WHERE email='{$email}'";
-//        $sth = $this ->connection -> query($sql);
-//        $result = $sth -> fetchAll(PDO::FETCH_ASSOC);
-//        return $result;
-//    }
-//
-//    /*
-//     * Метод для проверки был-ли зарегистрирован пользователь ранее.
-//     *  Использвуется при валидации
-//     */
-//    public function check_user($password , $login){
-//        $sql = "SELECT * FROM " . TABLE_NAME . " WHERE password='{$password}' AND login='{$login}'";
-//        $sth = $this -> connection -> query($sql);
-//        $result = $sth -> fetchAll(PDO::FETCH_ASSOC);
-//        return $result;
-//    }
-//
-//
-//    /*
-//     * Метод для получения ID-пользвателя. Использвуется при внесении ID-пользователя
-//     * к каждому оставленному им комменту или отправленному сообщению
-//     */
-//    public function getUserId($data)
-//    {
-//        $sql = "SELECT id_user FROM " . TABLE_NAME . " WHERE login='{$data['name']}' ";
-//        $sth = $this -> connection -> query($sql);
-//        $result = $sth -> fetchAll(PDO::FETCH_ASSOC);
-//        return $result;
-//    }
 }
-
-
-
-
-
-
-
-
-
-
-
