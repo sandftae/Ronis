@@ -6,7 +6,6 @@
 
 class Image extends Model{
 
-
     protected $endMass = [];
     protected $arrayAllSrc = [];
     protected $arrayForModel = [];
