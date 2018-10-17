@@ -5,13 +5,11 @@
  * Данный класс отвечает за обработку и вызов контроллеров
  */
 
-
 class App extends Database
 {
 
     protected static $router;
     protected static $error;
-//    public static $database;
 
     public static function getRouter(){
         return self::$router;
@@ -35,25 +33,6 @@ class App extends Database
         $controller_class = ucfirst(self::$router -> getController()). 'Controller';
         $controller_method = strtolower(self::$router -> getMethodPrefix().self::$router -> getAction());
 
-        /*
-         * Здесь происходит инициализация соединения с БД. Для работы
-         * с БД использвуется PDO
-         */
-//        self::$database = new Database();
-
-//        $layout = self::$router -> getRoute();
-
-        /*
-         * Этот оператор ветвления выполняет важную часть кода. Он проверяет
-         * кто именно сейчас обратился к контроллеру/методу :
-         * администратор сайта или же случайный посетитель.
-         * Если посетитель - осуществляется редирект пользователя на главную
-         * В противном случае все оставется неизменным.
-         * Этот "трюк" я не сам создал. Я его подсмотрел в какой-то статье.
-         * Мне он показался очень "элегантным" и простым, т.к. не требуюет
-         * выполнения допольнительных проверок в классе SessiON (я хотел именно так
-         * изначально).
-         */
         $layout = self::$router -> getRoute();
         if($layout == 'admin' && Session::get('role') != 'admin'){
             if($controller_method != 'admin_login'){
@@ -81,7 +60,6 @@ class App extends Database
 
         }else{
             Error::view_error();
-//            throw new Exception('Method '.$controller_method.' of class ' . $controller_class.' does not exist ');
         }
 
 
@@ -93,11 +71,5 @@ class App extends Database
         $layout_path = VIEWS_PATH.DS.$layout.'.html';
         $layout_view_object = new View(compact('content') , $layout_path);
         echo $layout_view_object -> render();
-
-
-
-
     }
-
-
 }
