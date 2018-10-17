@@ -5,7 +5,7 @@ class Session{
     protected static $flash_session;
 
     /*
-     * Этот метод вызывается в котроллерах.
+     * Mетод вызывается в контроллерах.
      */
     public static function setFlash($message){
         self::$flash_session = $message;
