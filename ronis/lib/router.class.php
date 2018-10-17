@@ -5,7 +5,6 @@
  * Его задача - разобрать URI и получить с него контроллер,  метод
  * и другие части, т.е. разобрать на составные части
  */
-
 class Router
 {
     protected $uri;
@@ -15,6 +14,7 @@ class Router
     protected $route;
     protected $method_prefix;
     protected $language;
+    
     /*
      * Вспомогательные методы для получения доступак сокрытым свойсвам
      */
@@ -48,6 +48,7 @@ class Router
 
     public function __construct($uri){
         $this -> uri= urldecode(trim($uri , '/'));
+        
         /*
          * получаю значения по умолчанию
          */
@@ -83,7 +84,7 @@ class Router
             /*
              * Следующим элементос $path_parts может быть только контроллер.
              * Если элемент не пустой, то значение будет записано в нижнем
-             * регстре
+             * регистре
              */
             if(current($path_parts)){
                 $this -> controller = strtolower(current($path_parts));
@@ -106,9 +107,6 @@ class Router
              */
 
             $this -> params = $path_parts;
-
-
-
         }
     }
 
