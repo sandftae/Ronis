@@ -1,9 +1,7 @@
 <?php
 
 class Page extends Model{
-
   
-
     public function save($data , $id = null){
         if(!isset($data['alias']) || !isset($data['title']) || !isset($data['content'])){
             return false;
