@@ -5,10 +5,8 @@
  * сообщений пользователя (те, которые не админы:)),
  * а также сохранение в БД их и вывод во вью для админов
  */
-
 class Message extends Model{
     public $errors = [];
-
 
     /*
      * Данный метод либо добавляет, либо обновляет таблицу  MESSAGE`s
@@ -55,17 +53,6 @@ class Message extends Model{
         return $this -> errors;
     }
 
-
-
-
-    /*
-     * ==============================================================
-     *
-     * Ниже пойдуи методы работы с БД, которые мне было удобней разместить в саомй модели.
-     * Это позволяетсразу видить как построен запрос и как он будет отправлен.
-     *
-     * ==============================================================
-     */
 /*
  * Данный метод позволяет добавлять новую запись
  */
@@ -73,9 +60,7 @@ class Message extends Model{
         $sql = 'INSERT INTO ' . TABLE_MESSAGES . ' SET  name="'.$name.'" ,
                                                         email="'.$email.'" ,
                                                         messages="'.$message.'"';
-//        var_dump($this -> database -> prepare());
         $conn = $this -> connection -> prepare($sql);
-//        $conn = $this -> database -> prepare($sql);
         $result = $conn -> execute();
         return $result;
     }
