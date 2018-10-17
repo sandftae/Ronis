@@ -1,10 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: 111
- * Date: 13.02.2018
- * Time: 0:09
- */
+
+
 /*
  * Этот клас "разбит" на двке части:
  * 1) логика обработки данных от пользователя (валидация и т.п.)
@@ -15,24 +11,10 @@
 
 class Update extends Model{
 
-    //============================================
-    /*
-     * Здесь идет часть, которая отвечает за логику обработки данных полученных от
-     * пользвателя.  Равзбивать на несколько классов было неудобно
-     */
-    //============================================
-
-    //==============
-    // Свойства для работы с директориями
-    //==============
-
-
     protected $max_file_size = MAX_LOADING_FILE_SIZE;
     public $sql;
-//    protected $upload_dir = PATH_FOR_IMG;
     public $masImgSrc;
     public $full_dir_img;
-//    public $path_to_img_for_slider = PATH_TO_IMG_FOR_SLIDER;
 
     protected $lastRandomNumber = [];
 
@@ -92,7 +74,6 @@ class Update extends Model{
      * Метод собирает ошибки, которые могут возникнуть при работе пользователя с формой и в дальнейшем
      * их отображает.
      * Проверка формата получаемых файлов также осуществляется здесь.
-     * ВАЖНО!
      * Предполагается, что директория для хранения файлов имеется. По сему
      * не проводится проверка на наличие директории для хранения файлов
      */
@@ -176,7 +157,6 @@ class Update extends Model{
         return true;
     }
 
-
     /*
      * Валидация заполняемых полей и проверка на пустоту.
      * Сбор возможных ошибок
@@ -206,7 +186,6 @@ class Update extends Model{
         }
         return true;
     }
-
 
     /*
      * Возвращает массив с данными по всем изображениям
@@ -289,16 +268,13 @@ class Update extends Model{
             }
         }
 
-        // ДОБАВИТЬ MassiveForFlexSlider
-        // ОБЯЗАТЕЛЬНО
+   
         if(!$this -> arrayBridge($arr_banner , array_count_values($arr_banner))){
             return $arr_banner;
         }
         return $this -> arrayBridge($arr_banner , array_count_values($arr_banner));
 
     }
-
-
 
         /*
          * Здесь происходить соединкение массива и внесение новых ему значений.
@@ -356,20 +332,11 @@ class Update extends Model{
 
     }
 
-
- //=============================================================
- /*
-  * Звершение части, отвечающей за логику работы с обработкой данных
-  */
- //=============================================================
-
-
 //==============================================================
 /*
  * Здесь идут методы, которые отвечают за работу с иображениями,
  * их обработку и подготовку к сохранению.
  */
-
 
     /*
      * Метод, который определяет  какой процент  меньшее_значение составляет
@@ -387,7 +354,6 @@ class Update extends Model{
     protected function valueForNewBorder ($percent , $border){
         return ceil($border * $percent / 100);
     }
-
 
     /*
      * Данный метод определяет новые нзачения ширины и высоты для картинок, ширина и высота
@@ -486,14 +452,6 @@ class Update extends Model{
         imagejpeg($image_char , $path , 75);
     }
 
-
-//=============================================================
-/*
- * Завершение блока для работы с изображеиями
- */
-//=============================================================
-
-
 //=============================================================
 /*
 * Ниже подйдет та часть, которая есть вспомогательной - иметоды для получения
@@ -514,7 +472,6 @@ class Update extends Model{
         return $result;
     }
 
-
     /*
      * Метод, который вытаскивает все записи из таблицы banners
      */
@@ -525,7 +482,6 @@ class Update extends Model{
         return $result;
     }
 
-
     /*
      * Данный метод возвращает все инфо по полученному id
      */
@@ -535,7 +491,6 @@ class Update extends Model{
         $result = $query -> fetchAll(PDO::FETCH_ASSOC);
         return $result;
     }
-
 
     /*
      * Метод позволяет провести обновление таблицы banners по заданному id. Обязательно
@@ -552,7 +507,6 @@ class Update extends Model{
         return $result;
     }
 
-
     /*
      * Данный метод возвращает нумерованный массив из таблицы "position". В данной таблице будет
      * создаваться связь между id каждого отдельного баннера в таблице banners и его позицией в списке
@@ -566,11 +520,9 @@ class Update extends Model{
         return $result;
     }
 
-
     /*
      * Данный метод возвращает определенную запись из таблицы position по переданному id
      */
-
     public function getPositionById($id_banner){
         $sql = 'SELECT * FROM ' . TABLE_POSITION . ' WHERE id_banner="' . $id_banner . '"';
         $query = $this -> connection -> query($sql);
@@ -578,11 +530,9 @@ class Update extends Model{
         return $result;
     }
 
-
     /*
      * Метод вносит значение позиции в таблицу position
      */
-
     public function insertPosition($position_number){
         $sql = 'INSERT INTO ' . TABLE_POSITION . ' VALUES(null , ?)';
         $conn = $this -> connection -> prepare($sql);
@@ -594,7 +544,6 @@ class Update extends Model{
      * Метод проводит обновление позиции по заданному id
      *
      */
-
     public function updatePositionById($id_banner , $new_position_number){
         $sql = 'UPDATE ' . TABLE_POSITION . ' SET number_position="'.$new_position_number.'" WHERE id_banner="'.$id_banner.'"';
         $conn = $this -> connection -> prepare($sql);
@@ -602,11 +551,10 @@ class Update extends Model{
         return $result;
     }
 
-
     /*
      * Данный метод позволяет вносить комплексно новые данные в обновляемую таблицу.
      * массив $result содетжит результат по каждой вносимой записи. Этот массив позволит провести
-     * более оперативно отладку, если она понадоится.
+     * более оперативно отладку, если она понадобится.
      */
     public function updateAllPosition(array $data){
         $result = [];
@@ -615,7 +563,7 @@ class Update extends Model{
             $conn = $this -> connection -> prepare($sql);
             $result[] = $conn -> execute();
         }
-        // Массив для проведения отладки. Собержит инфо по всем внесенным данным (TRUE/FALSE)
+        // Массив для проведения отладки. Содержит инфо по всем внесенным данным (TRUE/FALSE)
         return $result;
     }
 
