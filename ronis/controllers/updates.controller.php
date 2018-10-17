@@ -1,8 +1,8 @@
 <?php
 
 /*
- * Этот контроллер отвечаает за работу с графическими фалами
- * и выводоа результата валидации
+ * Этот контроллер отвечает за работу с графическими файлами
+ * и вывода результата валидации
  */
 Class UpdatesController extends Controller{
 
@@ -50,10 +50,6 @@ Class UpdatesController extends Controller{
     public function admin_update(){
         //Здесь будет происходить обновление картинок
 
-
-
-
-
         if (isset($this->params[1])) {
                 $res = [];
                 $res[] = array_shift($this -> model -> getImgById($this -> params[1]));
@@ -97,9 +93,6 @@ Class UpdatesController extends Controller{
         }else{
             Session::setFlash('Error.');
         }
-
-//        Router::redirect('/admin/updates/');
-
 
     }
 
