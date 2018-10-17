@@ -22,6 +22,5 @@ function __autoload($class_name){
         require_once ($model_path);
     }else{
         Error::view_error();
-//        throw new Exception('Failed to include class: '.$class_name);
     }
 }
