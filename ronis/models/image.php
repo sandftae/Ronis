@@ -1,88 +1,114 @@
 <?php
 
-/*
- * Этот класс отвечает за лоогику вывода изображений в слайдере.
+/**
+ * Class Image
  */
-
-class Image extends Model{
-
+class Image extends Model
+{
+    /**
+     * @var array
+     */
     protected $endMass = [];
+
+    /**
+     * @var array
+     */
     protected $arrayAllSrc = [];
+
+    /**
+     * @var array
+     */
     protected $arrayForModel = [];
+
+    /**
+     * @var array
+     */
     public $endMassForRecord = [];
 
-
-    public function __construct(){
+    /**
+     * Image constructor.
+     */
+    public function __construct()
+    {
         parent::__construct();
-        $this -> arrayAllSrc = $this -> getAllSrc();
-        $this -> arrayForModel = $this -> getAllPosition();
-        $this -> MassiveForFlexSlider($this -> arrayForModel);
-        $this -> arrayEndMassForRecord();
+        $this->arrayAllSrc = $this->getAllSrc();
+        $this->arrayForModel = $this->getAllPosition();
+        $this->MassiveForFlexSlider($this->arrayForModel);
+        $this->arrayEndMassForRecord();
     }
 
-    protected function MassiveForFlexSlider (array $data)
+    /**
+     * @param array $data
+     * @return bool
+     */
+    protected function MassiveForFlexSlider(array $data)
     {
         $mass = [];
-        foreach($data as $key => $value){
+        foreach ($data as $key => $value) {
             $mass[$data[$key]['id_banner']] = $data[$key]['number_position'];
         }
 
-
         $count = count($mass);
-
 
         for ($i = 0; $i <= $count; $i++) {
             if (count($mass) == 0) {
                 return false;
             }
             $min = min($mass);
-            foreach ($mass as $key => $value) {
 
+            foreach ($mass as $key => $value) {
                 if ($value == $min && $value != $mass[$key + 1]) {
                     $this->endMass[$key] = $value;
                     unset($mass[$key]);
                     @$min = min($mass);
-
                 }
-
             }
-
         }
     }
 
-    /*
-     * Здесь происходит генерация массива для вывода во слайдере. Метод проверяет
-     * заданную последовательность в методе MassiveForFlexSlider. После чего согласно
-     * этой же последовательности генерит новый массив, в который просто по порядку вносчит
-     * данные из массива $this -> arrayAllSrc в соответсвии с порядковым
-     *  номером по id. После результат ввполнение метода передается во вью
+    /**
+     * Здесь происходит генерация массива для вывода во слайдере.
      */
-    protected function arrayEndMassForRecord(){
-        $mass = $this -> arrayAllSrc;
-        foreach($this -> endMass as $key => $value){
-            foreach( $mass as $keys => $values){
-                if((int)$mass[$keys]['id'] == $key){
-                    $this -> endMassForRecord[] =
+    protected function arrayEndMassForRecord()
+    {
+        $mass = $this->arrayAllSrc;
+        foreach ($this->endMass as $key => $value) {
+            foreach ($mass as $keys => $values) {
+                if ((int)$mass[$keys]['id'] == $key) {
+                    $this->endMassForRecord[] =
                         [
-                        'id' => $mass[$keys]['id'],
-                        'name' => $mass[$keys]['name'],
-                        'file_src' => $mass[$keys]['file_src'],
-                        'url' => $mass[$keys]['url'],
-                        'status' => $mass[$keys]['status'],
-                    ];
+                            'id' => $mass[$keys]['id'],
+                            'name' => $mass[$keys]['name'],
+                            'file_src' => $mass[$keys]['file_src'],
+                            'url' => $mass[$keys]['url'],
+                            'status' => $mass[$keys]['status'],
+                        ];
                 }
             }
         }
     }
 
+    /**
+     * @return array
+     */
+    public function arrayAllSrc()
+    {
+        return $this->arrayAllSrc;
+    }
 
-    public function arrayAllSrc(){
-        return $this -> arrayAllSrc;
+    /**
+     * @return array
+     */
+    public function getEndMass()
+    {
+        return $this->endMass;
     }
-    public function getEndMass(){
-        return $this -> endMass;
-    }
-    public function arrayForModel(){
-        return $this -> arrayForModel;
+
+    /**
+     * @return array
+     */
+    public function arrayForModel()
+    {
+        return $this->arrayForModel;
     }
 }

@@ -1,120 +1,156 @@
 <?php
 
-/*
+/**
  * Данный класс отвечает за парсинг запросов к приложению.
- * Его задача - разобрать URI и получить с него контроллер,  метод
- * и другие части, т.е. разобрать на составные части
+ * Его задача - разобрать URI и получить с него контроллер, метод, etc
+ *
+ * Class Router
  */
+
 class Router
 {
-    protected $uri;
-    protected $controller;
-    protected $action;
-    protected $params;
-    protected $route;
-    protected $method_prefix;
-    protected $language;
-    
-    /*
-     * Вспомогательные методы для получения доступак сокрытым свойсвам
+    /**
+     * @var string
      */
-    public function getUri(){
-        return $this -> uri;
+    protected $uri;
+
+    /**
+     * @var string
+     */
+    protected $controller;
+
+    /**
+     * @var string
+     */
+    protected $action;
+
+    /**
+     * @var array
+     */
+    protected $params;
+
+    /**
+     * @var string
+     */
+    protected $route;
+
+    /**
+     * @var string
+     */
+    protected $method_prefix;
+
+    /**
+     * @var string
+     */
+    protected $language;
+
+    /**
+     * @return string
+     */
+    public function getUri()
+    {
+        return $this->uri;
     }
 
-    public function getController(){
-        return $this -> controller;
+    /**
+     * @return string
+     */
+    public function getController()
+    {
+        return $this->controller;
     }
 
-    public function getAction(){
-        return $this -> action;
+    /**
+     * @return string
+     */
+    public function getAction()
+    {
+        return $this->action;
     }
 
-    public function getParams(){
-        return $this -> params;
+    /**
+     * @return array
+     */
+    public function getParams()
+    {
+        return $this->params;
     }
 
-    public function getRoute(){
-        return $this -> route;
+    /**
+     * @return string
+     */
+    public function getRoute()
+    {
+        return $this->route;
     }
 
-    public function getMethodPrefix(){
-        return $this -> method_prefix;
+    /**
+     * @return string
+     */
+    public function getMethodPrefix()
+    {
+        return $this->method_prefix;
     }
 
-    public function getLanguage(){
-        return $this -> language;
+    /**
+     * @return string
+     */
+    public function getLanguage()
+    {
+        return $this->language;
     }
 
-    public function __construct($uri){
-        $this -> uri= urldecode(trim($uri , '/'));
-        
+    /**
+     * Router constructor.
+     * @param $uri
+     */
+    public function __construct($uri)
+    {
+        $this->uri = urldecode(trim($uri, '/'));
+
         /*
          * получаю значения по умолчанию
          */
         $routes = Config::get('routes');
-        $this -> route = Config::get('default_route');
-        $this -> method_prefix = isset($routes[$this -> route]) ? $routes[$this -> route] : '';
-        $this -> language = Config::get('default_language');
-        $this -> controller = Config::get('default_controller');
-        $this -> action = Config::get('default_action');
+        $this->route = Config::get('default_route');
+        $this->method_prefix = isset($routes[$this->route]) ? $routes[$this->route] : '';
+        $this->language = Config::get('default_language');
+        $this->controller = Config::get('default_controller');
+        $this->action = Config::get('default_action');
 
-        /*
-         * Теперь разбираю полученный URI предварительно "очистив его" от
-         * не нужных гет-запросов  и т.д.
-         */
-
-        $uri_parts = explode('?' , $this -> uri);
-
+        $uri_parts = explode('?', $this->uri);
 
         $path = $uri_parts[0];
-        $path_parts = explode('/' , $path);
+        $path_parts = explode('/', $path);
 
-
-        if(count($path_parts)){
-
-            if(in_array(strtolower(current($path_parts)) , array_keys($routes))){
-                $this -> route = strtolower(current($path_parts));
-                $this -> method_prefix = isset($routes[$this -> route]) ? $routes[$this -> route] : '';
+        if (count($path_parts)) {
+            if (in_array(strtolower(current($path_parts)), array_keys($routes))) {
+                $this->route = strtolower(current($path_parts));
+                $this->method_prefix = isset($routes[$this->route]) ? $routes[$this->route] : '';
                 array_shift($path_parts);
-            }elseif(in_array(strtolower(current($path_parts)) , Config::get('languages'))){
-                $this -> language = strtolower(current($path_parts));
-                array_shift($path_parts);
-            }
-            /*
-             * Следующим элементос $path_parts может быть только контроллер.
-             * Если элемент не пустой, то значение будет записано в нижнем
-             * регистре
-             */
-            if(current($path_parts)){
-                $this -> controller = strtolower(current($path_parts));
+            } elseif (in_array(strtolower(current($path_parts)), Config::get('languages'))) {
+                $this->language = strtolower(current($path_parts));
                 array_shift($path_parts);
             }
 
-            /*
-             * Следующим элементом в массиве может быть action. ниже проверяется -
-             * если не пустое данное значение, то производится запись
-             */
-            if(current($path_parts)){
-                $this -> action = strtolower(current($path_parts));
+            if (current($path_parts)) {
+                $this->controller = strtolower(current($path_parts));
+                array_shift($path_parts);
             }
 
-            /*
-             * Когда все основные элементы найдены, то все оставшиеся
-             * элементы - это параметры. Их также нужно взять для дальнешей
-             * работы и выполнения методов в приложении. Т.е. здесь задаются атрибуты
-             * в одьекте роутер
-             */
+            if (current($path_parts)) {
+                $this->action = strtolower(current($path_parts));
+            }
 
-            $this -> params = $path_parts;
+            $this->params = $path_parts;
         }
     }
 
-    /*
-     * Данный метод будет проводить редирект на другую страницу,
-     * в случае возникновения ошибок
+    /**
+     * @param $location
      */
-    public static function redirect($location){
+    public static function redirect($location)
+    {
         header("Location: $location");
     }
 }

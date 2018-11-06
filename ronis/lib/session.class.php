@@ -1,57 +1,73 @@
 <?php
 
-class Session{
-
+/**
+ * Class Session
+ */
+class Session
+{
+    /**
+     * @var $flash_session
+     */
     protected static $flash_session;
 
-    /*
-     * Mетод вызывается в контроллерах.
+    /**
+     * @param $message
      */
-    public static function setFlash($message){
+    public static function setFlash($message)
+    {
         self::$flash_session = $message;
     }
 
-    public static function hasFlash(){
+    /**
+     * @return bool
+     */
+    public static function hasFlash()
+    {
         return !is_null(self::$flash_session);
     }
 
-    public static function flash(){
+    public static function flash()
+    {
         echo self::$flash_session;
         self::$flash_session = null;
     }
 
-    /*
-     * Метод используется для внесения данных по пользователю
+    /**
+     * @param $key
+     * @param $value
      */
-    public static function set($key , $value){
+    public static function set($key, $value)
+    {
         $_SESSION[$key] = $value;
     }
 
-    /*
-     * Мнтод получает значения из сессии
+    /**
+     * @param $key
+     * @return null
      */
-    public static function get($key){
-        if(isset($_SESSION[$key])){
+    public static function get($key)
+    {
+        if (isset($_SESSION[$key])) {
             return $_SESSION[$key];
         }
         return null;
     }
 
-    /*
-     * Метод позволяет удалить запись в сессии
+    /**
+     * @param $key
      */
-    public static function delete($key){
-        if(isset($_SESSION[$key])){
+    public static function delete($key)
+    {
+        if (isset($_SESSION[$key])) {
             unset($_SESSION[$key]);
         }
     }
 
-    /*
-     * Метод "уничтожает" запись. Вызывается при выходе пользвателя
-     * с админской части
+    /**
+     * session destroy method
      */
-    public static function destroy(){
+    public static function destroy()
+    {
         session_destroy();
     }
-
 }

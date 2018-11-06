@@ -2,7 +2,7 @@
 
 
 /*
- * Данный класс отвечает за обработку и вызов контроллеров
+ * Класс отвечает за обработку и вызов контроллеров
  */
 
 class App extends Database
@@ -11,11 +11,13 @@ class App extends Database
     protected static $router;
     protected static $error;
 
-    public static function getRouter(){
+    public static function getRouter()
+    {
         return self::$router;
     }
 
-    public static function getError(){
+    public static function getError()
+    {
         return self::$error;
     }
 
@@ -25,17 +27,17 @@ class App extends Database
      * параметорв он получеате uri. этот параметр будет использваться
      * для создания обьекта роутера.
      */
-    public static function run($uri){
+    public static function run($uri)
+    {
         self::$router = new Router($uri);
         self::$error = new Error();
 
+        $controller_class = ucfirst(self::$router->getController()) . 'Controller';
+        $controller_method = strtolower(self::$router->getMethodPrefix() . self::$router->getAction());
 
-        $controller_class = ucfirst(self::$router -> getController()). 'Controller';
-        $controller_method = strtolower(self::$router -> getMethodPrefix().self::$router -> getAction());
-
-        $layout = self::$router -> getRoute();
-        if($layout == 'admin' && Session::get('role') != 'admin'){
-            if($controller_method != 'admin_login'){
+        $layout = self::$router->getRoute();
+        if ($layout == 'admin' && Session::get('role') != 'admin') {
+            if ($controller_method != 'admin_login') {
                 Router::redirect('/default');
             }
         }
@@ -43,8 +45,7 @@ class App extends Database
 
         /*
          * ЗДесь вызываю методы контроллеров. Здесь и происходит
-         * переброс на все шаблоны/обработчики. Такой вариант я видел в Codeigniter,
-         * т.к. с ним работаю. Однаго здесь его сделал проще:
+         * переброс на все шаблоны/обработчики.Выполняется так:
          * 1) создаю обьект
          * 2) проверяю внем наличие метода, по которому обратился пользватель
          *          - метод есть?
@@ -53,23 +54,21 @@ class App extends Database
          */
 
         $controller_object = new $controller_class();
-        if(method_exists($controller_object , $controller_method)){
-            $view_path = $controller_object -> $controller_method();
-            $view_object = new View($controller_object -> getData() , $view_path);
-            $content = $view_object -> render();
-
-        }else{
+        if (method_exists($controller_object, $controller_method)) {
+            $view_path = $controller_object->$controller_method();
+            $view_object = new View($controller_object->getData(), $view_path);
+            $content = $view_object->render();
+        } else {
             Error::view_error();
         }
 
-
-        if($layout == 'admin' && Session::get('role') != 'admin'){
-            if($controller_method != 'admin_login'){
+        if ($layout == 'admin' && Session::get('role') != 'admin') {
+            if ($controller_method != 'admin_login') {
                 Router::redirect('/admin/users/login');
             }
         }
-        $layout_path = VIEWS_PATH.DS.$layout.'.html';
-        $layout_view_object = new View(compact('content') , $layout_path);
-        echo $layout_view_object -> render();
+        $layout_path = VIEWS_PATH . DS . $layout . '.html';
+        $layout_view_object = new View(compact('content'), $layout_path);
+        echo $layout_view_object->render();
     }
 }

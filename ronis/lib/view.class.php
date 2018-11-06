@@ -1,75 +1,69 @@
 <?php
 
-/*
- * Обьекты данного класса создаются только в тех сслучаях, когда
- * необходимо передать определенное представление и передвать в него же
- * данный, для дальнейшего отображения в html коде
+/**
+ * Class View
  */
-class View{
-
+class View
+{
+    /**
+     * @var array
+     */
     protected $data;
+
+    /**
+     * @var bool|null|string
+     */
     protected $path;
 
-
-    /*
-     * Определяется путь к шаблону в этом методе
+    /**
+     * @return bool|string
      */
-    protected static function getDefaultViewPath(){
+    protected static function getDefaultViewPath()
+    {
         $router = App::getRouter();
 
-        if(!$router){
+        if (!$router) {
             return false;
         }
 
-        $controller_dir = $router -> getController();
-        $template_name =  $router -> getMethodPrefix().$router -> getAction().'.html';
-        return VIEWS_PATH.DS.$controller_dir.DS.$template_name;
+        $controller_dir = $router->getController();
+        $template_name = $router->getMethodPrefix() . $router->getAction() . '.html';
+        return VIEWS_PATH . DS . $controller_dir . DS . $template_name;
     }
 
-
-    public function __construct($data = [] , $path = null){
-        if(!$path){
-        /*
-         * Если переменная $path не задана или пустая, то ее опрделение
-         * происходит самостоятельно (в ручном режиме, иначе говоря)
-         */
+    /**
+     * View constructor.
+     * @param array $data
+     * @param null $path
+     */
+    public function __construct($data = [], $path = null)
+    {
+        if (!$path) {
             $path = self::getDefaultViewPath();
-
         }
 
-
-        /*
-         * Если файла по указанному пути не существует, то "отлавливаю" ошибку
-         * и сообщаю об этом
-         */
-        if(!file_exists($path)){
+        if (!file_exists($path)) {
             Error::view_error();
         }
 
-        /*
-         * Если все ок, то инициализированные свойства записываются с
-         * пришедшими значениями
-         */
-        $this -> path = $path;
-        $this -> data = $data;
-
+        $this->path = $path;
+        $this->data = $data;
     }
 
 
-    /*
-     * Данный метод отвечает за рендеринг шаблона. Он возвращает готовый
-     * html код. Этот метод использует атрибуты обьекта
+    /**
+     * @return false|string
      */
 
-    public function render(){
-        $data = $this -> data;
+    public function render()
+    {
+        $data = $this->data;
 
-        /*
-         * Провожу буферизацию. 
-         */
         ob_start();
-        include_once ($this -> path);
+        include_once($this->path);
+
         $content = ob_get_clean();
+
         return $content;
     }
 }

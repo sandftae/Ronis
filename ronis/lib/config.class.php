@@ -1,28 +1,32 @@
 <?php
 
 /*
- * Данный класс отвечает за параметры настроек прилождения
+ * Класс отвечает за параметры настроек прилождения
  */
-
 
 class Config
 {
     protected static $settings = [];
 
-    /*
-     * Метод возвращает значение из массива сеттинг
+    /**
+     * @param $key
+     * @return mixed|null
      */
-    public static function get($key){
+    public static function get($key)
+    {
         return isset(self::$settings[$key]) ? self::$settings[$key] : null;
     }
 
 
-    /*
+    /**
      * В методе выполняется присваивания значений элеметнам сеттинг
      * с указаным ключем
+     *
+     * @param $key
+     * @param $value
      */
-    public static function set($key , $value){
+    public static function set($key, $value)
+    {
         self::$settings[$key] = $value;
     }
-
 }
